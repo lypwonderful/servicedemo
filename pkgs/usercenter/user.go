@@ -37,6 +37,9 @@ type (
 		Birth int    `json:"time"`
 		Sex   string `json:"sex"`
 	}
+	Users struct {
+		User []User
+	}
 
 	UserId struct {
 		Id string
@@ -71,7 +74,7 @@ func init() {
 	}
 }
 
-func (this *UserProvider) getUser(userId string) (*User, error) {
+func (*UserProvider) getUserInfo(userId string) (*User, error) {
 	if user, ok := userMap.user[userId]; ok {
 		return &user, nil
 	}
@@ -79,23 +82,26 @@ func (this *UserProvider) getUser(userId string) (*User, error) {
 	return nil, fmt.Errorf("invalid user id:%s", userId)
 }
 
-func (this *UserProvider) GetUser(ctx context.Context, req []string, rsp *User) error {
+func (uProd *UserProvider) GetUserInfo(ctx context.Context, req []string, rsp *Users) error {
 	var (
 		err  error
 		user *User
 	)
 
 	gxlog.CInfo("req:%#v", req)
-	user, err = this.getUser(req[0])
-	if err == nil {
-		*rsp = *user
-		gxlog.CInfo("rsp:%#v", rsp)
-		// s, _ := json.Marshal(rsp)
-		// fmt.Println(string(s))
+	for _, v := range req {
+		user, err = uProd.getUserInfo(v)
+		if err == nil {
+			rsp.User = append(rsp.User, *user)
+			gxlog.CInfo("rsp:%#v", rsp)
+			// s, _ := json.Marshal(rsp)
+			// fmt.Println(string(s))
 
-		// s, _ = json.Marshal(*rsp)
-		// fmt.Println(string(s))
+			// s, _ = json.Marshal(*rsp)
+			// fmt.Println(string(s))
+		}
 	}
+
 	return err
 }
 

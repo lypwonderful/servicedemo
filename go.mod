@@ -20,8 +20,11 @@ require (
 	github.com/mailru/easyjson v0.0.0-20190221075403-6243d8e04c3f // indirect
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.6 // indirect
-	github.com/name5566/leaf v0.0.0-20181103040206-1364c176dfbd // indirect
+	github.com/name5566/leaf v0.0.0-20181103040206-1364c176dfbd
+	github.com/olivere/elastic v6.2.16+incompatible
+	github.com/pkg/errors v0.8.1 // indirect
 	github.com/samuel/go-zookeeper v0.0.0-20180130194729-c4fab1ac1bec // indirect
+	github.com/smartystreets/goconvey v0.0.0-20190306220146-200a235640ff
 	github.com/stretchr/testify v1.3.0 // indirect
 	golang.org/x/crypto v0.0.0-20190228161510-8dd112bcdc25 // indirect
 	golang.org/x/net v0.0.0-20190301231341-16b79f2e4e95 // indirect
