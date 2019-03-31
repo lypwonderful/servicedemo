@@ -1,9 +1,9 @@
 package mongodb
 
 import (
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"gopkg.in/mgo.v2/bson"
 	"testing"
 )
 
@@ -57,10 +57,15 @@ func TestFind(t *testing.T) {
 	dbObj := &MongoFactory{}
 	dbCli := dbObj.Create("mongodb://root:example@localhost:27017").NewDBClient()
 	c := dbCli.Client.Database("userTest").Collection("userinfounique2")
-	retUserInfo := &UserInfo{}
-	err := c.FindOne(dbCli.Ctx, bson.M{"name": "p2i"}).Decode(retUserInfo)
+	//retUserInfo := &UserInfo{}
+	retUserInfo, err := c.Find(dbCli.Ctx, bson.D{})
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(retUserInfo)
+	var out interface{}
+	for retUserInfo.Next(dbCli.Ctx) {
+		retUserInfo.Decode(&out)
+		t.Log(out)
+	}
+
 }
